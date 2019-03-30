@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	max := runtime.NumCPU()
+	max := runtime.NumCPU() * 2
 	s := &sync.Map{}
 
 	for i := 0; i < max; i++ {
@@ -26,15 +26,13 @@ func run(s *sync.Map) {
 	for {
 
 		u1 := uuid.Must(uuid.NewV4())
-		st := u1.String()
-
-		_, ok := s.Load(st)
+		_, ok := s.Load(u1)
 
 		if ok {
 			println("collision uuid!")
 			os.Exit(1)
 		}
-		s.Store(st, st)
-
+		fmt.Println(u1.String())
+		s.Store(u1, nil)
 	}
 }
