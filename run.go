@@ -23,7 +23,7 @@ func main() {
 }
 
 func run(s *sync.Map) {
-	for i := 0; i < 10; i++ {
+	for {
 
 		u1 := uuid.Must(uuid.NewV4())
 		st := u1.String()
