@@ -65,7 +65,7 @@ func main() {
 func runA(res *result) {
 	for {
 
-		u1 := uuid.Must(uuid.NewV4())
+		u1 := uuid.NewV4()
 
 		if res.Has(u1) {
 			println("collision uuid! %s", u1.String())
