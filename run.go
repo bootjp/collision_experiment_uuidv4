@@ -25,7 +25,7 @@ func main() {
 func run(s *sync.Map) {
 	for {
 
-		u1 := uuid.Must(uuid.NewV4())
+		u1 := uuid.NewV4()
 		_, ok := s.Load(u1)
 
 		if ok {
