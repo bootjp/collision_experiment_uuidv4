@@ -1,36 +1,20 @@
 package main
 
 import (
-	"fmt"
+	uuid "github.com/satori/go.uuid"
 	"log"
 	"os"
-	"runtime"
-	"sync"
-
-	uuid "github.com/satori/go.uuid"
 )
 
 
 func main() {
-	max := runtime.NumCPU()
-	wg := &sync.WaitGroup{}
-	for i := 0; i < max; i++ {
-		wg.Add(1)
-		go run(wg, i)
-	}
-
-	wg.Wait()
-	fmt.Println("DONE")
-}
-
-func run(wg *sync.WaitGroup, my int) {
 	var (
 		bufferSize  = 2000
 		bufferLimit = 1900
 	)
 	buf := make([]byte, 0, bufferSize)
 
-	file, err := os.Create(fmt.Sprintf("/tmp/uuid_%d", my))
+	file, err := os.Create("/tmp/uuid_single")
 	if err != nil {
 		panic(err)
 	}
@@ -47,8 +31,6 @@ func run(wg *sync.WaitGroup, my int) {
 				log.Fatal(err)
 			}
 			buf = make([]byte, 0, bufferSize)
-
 		}
 	}
-	//wg.Done()
 }
