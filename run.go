@@ -2,19 +2,20 @@ package main
 
 import (
 	"fmt"
+	mapset "github.com/deckarep/golang-set"
 	"os"
 	"runtime"
-	"sync"
 
 	"github.com/satori/go.uuid"
 )
 
+
 func main() {
 	max := runtime.NumCPU() * 2
-	s := &sync.Map{}
+	store := mapset.NewSet()
 
 	for i := 0; i < max; i++ {
-		go run(s)
+		go run(store)
 	}
 
 	c := make(chan byte)
@@ -22,17 +23,16 @@ func main() {
 	fmt.Println(wait)
 }
 
-func run(s *sync.Map) {
+func run(s mapset.Set) {
 	for {
 
 		u1 := uuid.NewV4()
-		_, ok := s.Load(u1)
 
-		if ok {
+		if s.Contains(u1) {
 			println("collision uuid!")
 			os.Exit(1)
 		}
 		fmt.Println(u1.String())
-		s.Store(u1, nil)
+		s.Add(u1)
 	}
 }
