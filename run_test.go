@@ -1,7 +1,7 @@
 package main
 
 import (
-	"sync"
+	mapset "github.com/deckarep/golang-set"
 	"testing"
 
 	"github.com/satori/go.uuid"
@@ -26,12 +26,11 @@ func TestRun(t *testing.T) {
 	}
 
 	for _, v := range testData {
-		s := sync.Map{}
-		s.Store(v.store, nil)
-
-		_, ok := s.Load(v.compare)
-
-		if ok != v.exist {
+		// s := sync.Map{}
+		store := mapset.NewThreadUnsafeSet()
+		store.Add(v.store)
+		store.Contains()
+		if store.Contains(v.compare) != v.exist {
 			t.Fatalf("store: %v, compare: %v exist: %v ", v.store, v.compare, v.exist)
 		}
 	}
