@@ -33,7 +33,6 @@ func run(s mapset.Set, cnt *uint64) {
 			os.Exit(1)
 		}
 		atomic.AddUint64(cnt, 1)
-		fmt.Printf("%d\n", *cnt)
 		s.Add(u1)
 	}
 }
