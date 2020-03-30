@@ -29,7 +29,6 @@ func TestRun(t *testing.T) {
 		// s := sync.Map{}
 		store := mapset.NewThreadUnsafeSet()
 		store.Add(v.store)
-		store.Contains()
 		if store.Contains(v.compare) != v.exist {
 			t.Fatalf("store: %v, compare: %v exist: %v ", v.store, v.compare, v.exist)
 		}
